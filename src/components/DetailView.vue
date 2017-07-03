@@ -2,15 +2,15 @@
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--8-col">
       <div class="picture">
-        <img :src="this.pictures[$route.params.id].url" />
+        <img :src="this.pictures.url" />
       </div>
       <div class="info">
-        <span>{{ this.pictures[$route.params.id].info }}</span>
+        <span>{{ this.pictures.info }}</span>
       </div>
     </div>
     <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
       <div class="comment">
-        <span>{{ this.pictures[$route.params.id].comment }}</span>
+        <span>{{ this.pictures.comment }}</span>
       </div>
       <div class="actions">
         <router-link class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" to="/post">
@@ -21,12 +21,23 @@
   </div>
 </template>
 <script>
-import data from '../data'
 export default {
-  data () {
-    return {
-      'pictures': data.pictures
+  data: () => ({
+    pictures: {
+      url: '',
+      info: '',
+      comment: ''
     }
+  }),
+  created () {
+    let key = this.$route.params.id
+    this.$root.$firebaseRefs.cat.child(key).once('value')
+      .then(snapshot => snapshot.val())
+      .then(data => {
+        this.pictures.url = data.url
+        this.pictures.info = data.info
+        this.pictures.comment = data.comment
+      })
   }
 }
 </script>

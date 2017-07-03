@@ -39,6 +39,9 @@ export default {
         .then(this.$router.push('/'))
     }
   },
+  created () {
+    // console.log(this.$root.cat)
+  },
   mounted () {
     this.$http.get('http://thecatapi.com/api/images/get?format=xml&results_per_page=1').then(response => {
       // console.log(response)

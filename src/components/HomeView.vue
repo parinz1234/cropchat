@@ -39,7 +39,9 @@
       }
     },
     created () {
-      console.log(this.$root.cat)
+      // this.$root.$firebaseRefs.cat.once('value', (snapshot) => {
+      //   console.log(snapshot.val())
+      // })
     },
     mounted () {
       this.saveCatsToCache()
